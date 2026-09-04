@@ -42,4 +42,74 @@ La aplicacion muestra usuario y contraseña, pero Firebase Auth recibe intername
 - Crear el usuario inicial usando el email tecnico derivado de su nombre de usuario.
 - Crear Firestore y publicar las reglas.
 - Para crear usuarios desde la plataforma, agregar una Cloud Function o backend con Firebase Admin SDK. Nunca se debe usar el Admin SDK ni una clave privada en el frontend.
-- Decidir si los documentos de `jugadores` tendran como ID el codigo actual o un ID generado. La implementacion actual admite ambos, pero recomienda conservar el codigo actual para mantener la relacion con `registros.J`.
+- Los documentos de `jugadores` pueden conservar el codigo actual como ID para mantener la relacion con `registros.playerId`.
+- No se usa una coleccion `torneos`: el listado de torneos se deriva de `registros.fase` en memoria.
+
+### Usuarios de jugadores
+
+El username inicial se genera con el primer nombre y el apellido sin espacios ni acentos:
+
+- `Sofía Miguel` -> `sofia.miguel`
+- `Milagros Belén Luján` -> `milagros.lujan`
+- `Candela Amiel Galvan Di Leo` -> `candela.galvandileo`
+
+La contraseña inicial será el DNI normalizado a números. Es una contraseña temporal y deberá reemplazarse por un flujo de cambio o recuperación antes de usar el sistema en producción.
+
+### Importador administrativo
+
+La pestaña `ADMINISTRACIÓN` permite importar JSON o CSV. Para JSON de jugadores se admite tanto un array como el formato actual de `profiles.json`:
+
+```json
+[
+	{
+		"id": "1Ieo9cImZEXIlqUWy1Pu",
+		"apellido": "PRUEBA",
+		"nombreOnly": "Jugador",
+		"nombre": "Jugador PRUEBA",
+		"pos": "Punta",
+		"edad": 15,
+		"teamId": "ID_DEL_EQUIPO",
+		"fotoUrl": "https://dominio-publico.example/jugador.jpg"
+	}
+]
+```
+
+Para `usuarios`, `id` debe ser el UID que ya existe en Firebase Authentication. La importacion no crea cuentas Auth; solo crea o actualiza el perfil Firestore:
+
+```json
+[
+	{
+		"id": "UID_DE_AUTH",
+		"username": "jugador",
+		"rol": "jugador",
+		"playerId": "ID_DEL_JUGADOR",
+		"teamIds": ["ID_DEL_EQUIPO"],
+		"activo": true
+	}
+]
+```
+
+Para CSV, la primera fila debe contener los nombres de los campos. Los campos `T`, `P`, `Er` y `edad` se convierten a numero; `teamIds` acepta IDs separados por coma.
+
+### Registros estadisticos
+
+Los registros usan nombres descriptivos. El archivo local `src/data/records.json` ya esta normalizado y puede importarse directamente en `registros`:
+
+```json
+{
+	"fecha": "2026-08-17",
+	"rival": "ONCATIVO",
+	"fase": "PLAYOFF - CUARTOS",
+	"playerId": "MIGUEL S.",
+	"fundamento": "Levantada",
+	"totalAcciones": 3,
+	"eficiencia": "100%",
+	"puntos": 0,
+	"errores": 0,
+	"teamId": "ID_DEL_EQUIPO"
+}
+```
+
+La aplicacion sigue pudiendo leer registros legacy con `F`, `R`, `Fa`, `J`, `Fu`, `T`, `E`, `P` y `Er`, pero las nuevas importaciones se guardan con el esquema descriptivo.
+
+El importador acepta los Excel exportados por la plataforma del profesor aunque se conviertan a CSV tabulado, separado por `;` o separado por comas. Mapea `ID_Partido`, `Fecha`, `Equipo_Propio`, `Rival`, `Fase_Torneo`, `Fundamento`, `Jugador`, `Indice`, `E%`, `Tot`, los seis resultados simbolicos, `Nro_Jugador` y sus porcentajes. En esta etapa `#` se toma como puntos y `=` como errores, manteniendo tambien todos los conteos y porcentajes individuales.

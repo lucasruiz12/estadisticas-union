@@ -27,22 +27,22 @@ export function MatchRegistry() {
   const fases = useMemo(() => {
     const recs = records.filter((r) => {
       if (!torneo) return true
-      return getTorneoFromFase(r.Fa) === torneo
+      return getTorneoFromFase(r.fase) === torneo
     })
-    return uniqueSorted(recs.map((r) => r.Fa))
+    return uniqueSorted(recs.map((r) => r.fase))
   }, [records, torneo])
 
   const rivales = useMemo(() => {
     const recs = records.filter((r) => {
-      if (torneo && getTorneoFromFase(r.Fa) !== torneo) return false
-      if (fase && r.Fa !== fase) return false
+      if (torneo && getTorneoFromFase(r.fase) !== torneo) return false
+      if (fase && r.fase !== fase) return false
       return true
     })
-    return uniqueSorted(recs.map((r) => r.R))
+    return uniqueSorted(recs.map((r) => r.rival))
   }, [records, torneo, fase])
 
   const fundamentos = useMemo(
-    () => uniqueSorted(records.map((r) => r.Fu)),
+    () => uniqueSorted(records.map((r) => r.fundamento)),
     [records],
   )
 
@@ -59,8 +59,8 @@ export function MatchRegistry() {
     [records, torneo, fase, rival, player, fund, query],
   )
 
-  const totPts = filtered.reduce((a, b) => a + b.P, 0)
-  const totErr = filtered.reduce((a, b) => a + b.Er, 0)
+  const totPts = filtered.reduce((a, b) => a + b.puntos, 0)
+  const totErr = filtered.reduce((a, b) => a + b.errores, 0)
   const rows = filtered.slice(0, VISIBLE_LIMIT)
 
   return (
@@ -169,18 +169,18 @@ export function MatchRegistry() {
             </thead>
             <tbody>
               {rows.map((r, i) => (
-                <tr key={`${r.F}-${r.R}-${r.J}-${r.Fu}-${i}`}>
-                  <td>{r.F}</td>
-                  <td>{r.R}</td>
-                  <td style={{ fontSize: 9 }}>{r.Fa}</td>
-                  <td>{r.J}</td>
-                  <td>{r.Fu}</td>
-                  <td>{r.T}</td>
+                <tr key={`${r.fecha}-${r.rival}-${r.playerId}-${r.fundamento}-${i}`}>
+                  <td>{r.fecha}</td>
+                  <td>{r.rival}</td>
+                  <td style={{ fontSize: 9 }}>{r.fase}</td>
+                  <td>{r.playerId}</td>
+                  <td>{r.fundamento}</td>
+                  <td>{r.totalAcciones}</td>
                   <td style={{ color: 'var(--green)', fontWeight: 'bold' }}>
-                    {r.P}
+                    {r.puntos}
                   </td>
                   <td style={{ color: 'var(--red2)', fontWeight: 'bold' }}>
-                    {r.Er}
+                    {r.errores}
                   </td>
                 </tr>
               ))}

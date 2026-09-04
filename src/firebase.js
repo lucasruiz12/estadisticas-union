@@ -21,3 +21,10 @@ const app = firebaseEnabled
 
 export const auth = app ? getAuth(app) : null
 export const db = app ? getFirestore(app) : null
+
+const provisioningApp = app
+  ? getApps().find((candidate) => candidate.name === 'provisioning') ||
+    initializeApp(firebaseConfig, 'provisioning')
+  : null
+
+export const provisioningAuth = provisioningApp ? getAuth(provisioningApp) : null

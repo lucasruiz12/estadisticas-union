@@ -16,13 +16,13 @@ import { FundCard } from '../ui/FundCard'
 import { KpiCard } from '../ui/KpiCard'
 import { PlayerCompareModal } from '../comparador/PlayerCompareModal'
 
-export function PlayerSheet() {
+export function PlayerSheet({ playerId }) {
   const { profiles, records } = useStats()
   const sortedKeys = useMemo(
     () => getSortedPlayerKeys(profiles),
     [profiles],
   )
-  const [playerKey, setPlayerKey] = useState(sortedKeys[0] || '')
+  const [playerKey, setPlayerKey] = useState(playerId || sortedKeys[0] || '')
   const [torneo, setTorneo] = useState('TODOS')
   const [fase, setFase] = useState('')
   const [rival, setRival] = useState('')
@@ -33,25 +33,25 @@ export function PlayerSheet() {
   const p = profiles[playerKey]
 
   const playerRecs = useMemo(
-    () => records.filter((r) => r.J === playerKey),
+    () => records.filter((r) => r.playerId === playerKey),
     [records, playerKey],
   )
 
   const fases = useMemo(() => {
     let recs = playerRecs
     if (torneo && torneo !== 'TODOS') {
-      recs = recs.filter((r) => getTorneoFromFase(r.Fa) === torneo)
+      recs = recs.filter((r) => getTorneoFromFase(r.fase) === torneo)
     }
-    return uniqueSorted(recs.map((r) => r.Fa))
+    return uniqueSorted(recs.map((r) => r.fase))
   }, [playerRecs, torneo])
 
   const rivales = useMemo(() => {
     let recs = playerRecs
     if (torneo && torneo !== 'TODOS') {
-      recs = recs.filter((r) => getTorneoFromFase(r.Fa) === torneo)
+      recs = recs.filter((r) => getTorneoFromFase(r.fase) === torneo)
     }
-    if (fase) recs = recs.filter((r) => r.Fa === fase)
-    return uniqueSorted(recs.map((r) => r.R))
+    if (fase) recs = recs.filter((r) => r.fase === fase)
+    return uniqueSorted(recs.map((r) => r.rival))
   }, [playerRecs, torneo, fase])
 
   const stats = useMemo(
@@ -115,7 +115,7 @@ export function PlayerSheet() {
 
   return (
     <div className="page">
-      <div style={{ marginBottom: 8 }}>
+      {!playerId ? <div style={{ marginBottom: 8 }}>
         <label
           style={{
             fontSize: 10,
@@ -140,7 +140,7 @@ export function PlayerSheet() {
             )
           })}
         </select>
-      </div>
+      </div> : null}
 
       <div ref={sheetRef}>
         <div
@@ -162,8 +162,20 @@ export function PlayerSheet() {
         </div>
 
         <div className="cardPerfil">
-          <div className="fotoJugador" aria-hidden>
-            {playerKey.split(' ')[0].slice(0, 3)}
+          <div className="fotoJugador">
+            {p.fotoUrl ? (
+              <img
+                src={p.fotoUrl}
+                alt={`Foto de ${p.nombre}`}
+                onError={(event) => {
+                  event.currentTarget.style.display = 'none'
+                  event.currentTarget.nextElementSibling.style.display = 'block'
+                }}
+              />
+            ) : null}
+            <span style={{ display: p.fotoUrl ? 'none' : 'block' }}>
+              {playerKey.split(' ')[0].slice(0, 3)}
+            </span>
           </div>
           <div className="gridData">
             <div className="dataItem">
@@ -205,13 +217,13 @@ export function PlayerSheet() {
             <div className="sectionHeaderTitle">
               DESGLOSE POR TORNEOS Y FASES:
             </div>
-            <button
+            {!playerId ? <button
               type="button"
               className="btnCompare"
               onClick={() => setCompareOpen(true)}
             >
               COMPARAR CARA A CARA
-            </button>
+            </button> : null}
           </div>
 
           <div className="filtersRow">
@@ -371,7 +383,7 @@ export function PlayerSheet() {
         </div>
       </div>
 
-      {compareOpen ? (
+      {compareOpen && !playerId ? (
         <PlayerCompareModal
           defaultJ1={playerKey}
           onClose={() => setCompareOpen(false)}

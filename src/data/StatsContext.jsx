@@ -1,10 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from 'react'
 import { getProfiles, getRecords } from './statsRepository'
+import { useAuth } from '../auth/AuthContext'
 
 const StatsContext = createContext(null)
 
 export function StatsProvider({ children }) {
+  const { userProfile } = useAuth()
   const [profiles, setProfiles] = useState({})
   const [records, setRecords] = useState([])
   const [loading, setLoading] = useState(true)
@@ -15,7 +17,10 @@ export function StatsProvider({ children }) {
 
     const loadStats = async () => {
       try {
-        const [p, r] = await Promise.all([getProfiles(), getRecords()])
+        const [p, r] = await Promise.all([
+          getProfiles(userProfile),
+          getRecords(userProfile),
+        ])
         await new Promise((resolve) => setTimeout(resolve, 700))
         if (cancelled) return
         setProfiles(p)
@@ -32,7 +37,7 @@ export function StatsProvider({ children }) {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [userProfile])
 
   return (
     <StatsContext.Provider value={{ profiles, records, loading, error }}>

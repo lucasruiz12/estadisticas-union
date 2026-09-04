@@ -15,6 +15,27 @@
 * {
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
+  scrollbar-color: var(--border-light) var(--bg);
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--border-light);
+  border: 2px solid var(--bg);
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--red2);
 }
 
 body {
@@ -41,6 +62,24 @@ input {
   background: radial-gradient(circle at 50% 0%, #1a233f 0%, #070e1e 70%);
 }
 
+.loadingMessage {
+  animation: loading-animation 0.75s ease-in-out infinite;
+}
+
+@keyframes loading-animation {
+  0% {
+    transform: scale(0.95);
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.95);
+  }
+}
+
 .box {
   background: var(--card);
   border: 1px solid var(--border);
@@ -61,6 +100,7 @@ input {
   cursor: pointer;
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .escudo {
@@ -109,6 +149,7 @@ button.pr {
   margin-top: 6px;
   font-size: 14px;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .appShell {
@@ -222,6 +263,13 @@ button.pr {
   font-weight: 900;
   color: var(--red2);
   font-size: 14px;
+}
+
+.fotoJugador img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .gridData {
@@ -553,16 +601,151 @@ td {
   .filtersRow {
     grid-template-columns: 1fr;
   }
+
   .kpiGrid {
     grid-template-columns: 1fr;
   }
+
   .fundGrid {
     grid-template-columns: 1fr;
   }
+
   .gridData {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .pieGridContainer {
+    grid-template-columns: 1fr;
+  }
+}
+
+.adminPanel label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text-dim);
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.adminTextarea {
+  width: 100%;
+  min-height: 260px;
+  resize: vertical;
+  padding: 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--card2);
+  color: #fff;
+  font: 12px/1.5 monospace;
+}
+
+.adminHint {
+  text-align: left;
+  padding: 0 0 12px;
+}
+
+.adminSuccess {
+  color: var(--green);
+  font-weight: bold;
+}
+
+.adminCheckbox {
+  display: flex !important;
+  grid-column: 1 / -1;
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+  margin: 8px 0;
+}
+
+.adminCheckbox input {
+  width: auto;
+  margin: 0;
+}
+
+.filePicker input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.filePicker label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--card2);
+  color: #fff;
+  cursor: pointer;
+}
+
+.filePicker label:hover {
+  border-color: var(--red2);
+  color: var(--red2);
+}
+
+.adminTabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.adminTabs button,
+.adminListItem button {
+  padding: 8px 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--card2);
+  color: #fff;
+  cursor: pointer;
+}
+
+.adminTabs button.active {
+  color: var(--red2);
+  border-color: var(--red2);
+}
+
+.adminFormGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.adminList {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.adminListItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card2);
+}
+
+.adminListItem span:first-child {
+  display: grid;
+  gap: 2px;
+}
+
+.adminListItem small {
+  color: var(--text-dim);
+}
+
+@media (max-width: 768px) {
+  .adminFormGrid {
     grid-template-columns: 1fr;
   }
 }

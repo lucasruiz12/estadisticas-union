@@ -38,9 +38,9 @@ export function getCalculatedStats(
   })
 
   records.forEach((r) => {
-    const j = r.J
-    const fu = r.Fu
-    const torneoName = getTorneoFromFase(r.Fa)
+    const j = r.playerId
+    const fu = r.fundamento
+    const torneoName = getTorneoFromFase(r.fase)
 
     if (
       filterTorneo &&
@@ -50,14 +50,14 @@ export function getCalculatedStats(
     ) {
       return
     }
-    if (filterFase && filterFase !== '' && r.Fa !== filterFase) return
-    if (filterRival && filterRival !== '' && r.R !== filterRival) return
+    if (filterFase && filterFase !== '' && r.fase !== filterFase) return
+    if (filterRival && filterRival !== '' && r.rival !== filterRival) return
 
     if (!stats[j]) stats[j] = {}
     if (!stats[j][fu]) stats[j][fu] = { tot: 0, pts: 0, err: 0 }
-    stats[j][fu].tot += r.T
-    stats[j][fu].pts += r.P
-    stats[j][fu].err += r.Er
+    stats[j][fu].tot += r.totalAcciones
+    stats[j][fu].pts += r.puntos
+    stats[j][fu].err += r.errores
   })
 
   return stats
@@ -66,11 +66,11 @@ export function getCalculatedStats(
 export function getTeamStatsByFund(records, profiles, posFilter, torneoFilter) {
   const teamStats = {}
   records.forEach((r) => {
-    const j = r.J
+    const j = r.playerId
     const prof = profiles[j]
     if (posFilter && prof && !prof.pos.includes(posFilter)) return
 
-    const torneoName = getTorneoFromFase(r.Fa)
+    const torneoName = getTorneoFromFase(r.fase)
     if (
       torneoFilter &&
       torneoFilter !== '' &&
@@ -80,11 +80,11 @@ export function getTeamStatsByFund(records, profiles, posFilter, torneoFilter) {
       return
     }
 
-    const fu = r.Fu
+    const fu = r.fundamento
     if (!teamStats[fu]) teamStats[fu] = { tot: 0, pts: 0, err: 0 }
-    teamStats[fu].tot += r.T
-    teamStats[fu].pts += r.P
-    teamStats[fu].err += r.Er
+    teamStats[fu].tot += r.totalAcciones
+    teamStats[fu].pts += r.puntos
+    teamStats[fu].err += r.errores
   })
   return teamStats
 }
@@ -95,17 +95,17 @@ export function filterRecords(
 ) {
   const q = (query || '').toLowerCase()
   return records.filter((r) => {
-    if (torneo && torneo !== '' && getTorneoFromFase(r.Fa) !== torneo) return false
-    if (fase && fase !== '' && r.Fa !== fase) return false
-    if (rival && rival !== '' && r.R !== rival) return false
-    if (player && r.J !== player) return false
-    if (fund && r.Fu !== fund) return false
+    if (torneo && torneo !== '' && getTorneoFromFase(r.fase) !== torneo) return false
+    if (fase && fase !== '' && r.fase !== fase) return false
+    if (rival && r.rival !== rival) return false
+    if (player && r.playerId !== player) return false
+    if (fund && r.fundamento !== fund) return false
     if (
       q &&
       !(
-        r.R.toLowerCase().includes(q) ||
-        r.J.toLowerCase().includes(q) ||
-        r.Fu.toLowerCase().includes(q)
+        r.rival.toLowerCase().includes(q) ||
+        r.playerId.toLowerCase().includes(q) ||
+        r.fundamento.toLowerCase().includes(q)
       )
     ) {
       return false
