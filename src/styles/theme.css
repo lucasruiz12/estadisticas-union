@@ -1,0 +1,568 @@
+:root {
+  --bg: #070e1e;
+  --card: #0f1a31;
+  --card2: #142343;
+  --border: #1e3563;
+  --border-light: #29467d;
+  --red: #ff2d2d;
+  --red2: #ff4d4d;
+  --green: #4eff8a;
+  --yellow: #ffe14e;
+  --blue: #3a86ff;
+  --text-dim: #8ea0c3;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+
+button,
+select,
+input {
+  touch-action: manipulation;
+}
+
+.loginWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 12px;
+  background: radial-gradient(circle at 50% 0%, #1a233f 0%, #070e1e 70%);
+}
+
+.box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+.escudoBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 auto 12px;
+  display: block;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.escudo {
+  width: 96px;
+  height: 96px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 8px;
+  display: block;
+  object-fit: contain;
+  cursor: pointer;
+  border: 3px solid var(--red);
+  transition: 0.2s;
+  margin: 0 auto;
+}
+
+.escudo:hover,
+.escudo:active {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255, 45, 45, 0.5);
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--card2);
+  border: 1px solid var(--border-light);
+  color: #fff;
+  margin: 4px 0;
+  font-size: 12px;
+  outline: none;
+}
+
+button.pr {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 900;
+  border: 0;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  margin-top: 6px;
+  font-size: 14px;
+  -webkit-appearance: none;
+}
+
+.appShell {
+  min-height: 100vh;
+}
+
+.top {
+  background: #0a1326;
+  border-bottom: 1px solid var(--border);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.top img {
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.btnSalir {
+  margin-left: auto;
+  background: 0;
+  border: 1px solid var(--border);
+  color: #ff6b6b;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  background: #0a1326;
+  position: sticky;
+  top: 47px;
+  z-index: 20;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabs button {
+  flex: 1;
+  background: 0;
+  border: 0;
+  color: #7a88a8;
+  padding: 10px 4px;
+  font-weight: 800;
+  border-bottom: 3px solid transparent;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.tabs button.active {
+  color: var(--red2);
+  border-bottom-color: var(--red2);
+}
+
+.page {
+  display: block;
+  padding: 10px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.c {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin: 10px 0;
+}
+
+.jugTitle {
+  background: linear-gradient(90deg, var(--red), #ff7a7a);
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 900;
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.cardPerfil {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.fotoJugador {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 2px solid var(--red);
+  object-fit: cover;
+  background: var(--card2);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: var(--red2);
+  font-size: 14px;
+}
+
+.gridData {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  width: 100%;
+}
+
+.dataItem {
+  background: var(--card2);
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.dataItem span {
+  display: block;
+  font-size: 9px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.dataItem b {
+  color: #fff;
+  font-size: 11.5px;
+}
+
+.sectionContainer {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.sectionHeaderTitle {
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--red2);
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: uppercase;
+}
+
+.filtersRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.filterBox label {
+  font-size: 10px;
+  color: var(--text-dim);
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+  letter-spacing: 0.5px;
+}
+
+.filterBox select {
+  font-weight: bold;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  background: var(--card2);
+  border: 1px solid var(--border-light);
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.kpiCard {
+  background: var(--card2);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 90px;
+}
+
+.kpiCard.greenBorder {
+  border-left: 5px solid var(--green);
+}
+
+.kpiCard.redBorder {
+  border-left: 5px solid var(--red2);
+}
+
+.kpiLabel {
+  font-size: 9.5px;
+  font-weight: 900;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.kpiLabel.greenText {
+  color: var(--green);
+}
+
+.kpiLabel.redText {
+  color: var(--red2);
+}
+
+.kpiBigNum {
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.kpiSubText {
+  font-size: 10px;
+  color: var(--text-dim);
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.fundHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.fundTitleText {
+  font-size: 11px;
+  font-weight: 900;
+  color: #3a86ff;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.fundGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.fundCard {
+  background: var(--card2);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.fundCardName {
+  font-size: 11px;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  letter-spacing: 0.4px;
+}
+
+.fundCardMetrics {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.fundCardMetrics b {
+  color: #fff;
+}
+
+.pieGridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.pieChartCard {
+  background: var(--card2);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 10px;
+  height: 220px;
+  position: relative;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+}
+
+th {
+  background: var(--card2);
+  color: var(--red2);
+  padding: 6px 4px;
+  position: sticky;
+  top: 0;
+}
+
+td {
+  padding: 5px 3px;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.chartContainer {
+  position: relative;
+  width: 100%;
+  max-width: 550px;
+  margin: 10px auto;
+  height: 260px;
+}
+
+.btnExport {
+  background: #4eff8a;
+  color: #070e1e;
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-weight: bold;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.btnCompare {
+  background: #3a86ff;
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: bold;
+  font-size: 10.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btnLink {
+  background: 0;
+  border: 0;
+  color: #666;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 100;
+  overflow-y: auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.modalBox {
+  max-width: 800px;
+  margin: 20px auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  position: relative;
+}
+
+.btnCloseModal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--red);
+  color: #fff;
+  border: 0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tableWrap {
+  overflow: auto;
+  max-height: 65vh;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.loginLogo {
+  width: 84px;
+  height: 84px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 8px;
+}
+
+.errMsg {
+  color: #ff6b6b;
+  display: block;
+  margin-top: 8px;
+}
+
+.muted {
+  opacity: 0.6;
+  text-align: center;
+  padding: 16px;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .filtersRow {
+    grid-template-columns: 1fr;
+  }
+  .kpiGrid {
+    grid-template-columns: 1fr;
+  }
+  .fundGrid {
+    grid-template-columns: 1fr;
+  }
+  .gridData {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .pieGridContainer {
+    grid-template-columns: 1fr;
+  }
+}

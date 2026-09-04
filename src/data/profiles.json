@@ -1,0 +1,182 @@
+{
+  "ARDILES V.": {
+    "apellido": "ARDILES",
+    "nombreOnly": "Victoria",
+    "nombre": "Victoria Ardiles",
+    "dni": "50.978.964",
+    "pos": "Armadora",
+    "nac": "24/09/2011",
+    "edad": 14,
+    "mano": "Derecha"
+  },
+  "BELTRAMONE G.": {
+    "apellido": "BELTRAMONE",
+    "nombreOnly": "Guillermina",
+    "nombre": "Guillermina Beltramone",
+    "dni": "46890379",
+    "pos": "Central",
+    "nac": "05/05/2006",
+    "edad": 20,
+    "mano": "Derecha"
+  },
+  "CORZO V.": {
+    "apellido": "CORZO BOTELLA",
+    "nombreOnly": "Valentina",
+    "nombre": "Valentina Corzo Botella",
+    "dni": "46259773",
+    "pos": "Opuesta",
+    "nac": "13/02/2005",
+    "edad": 21,
+    "mano": "Izquierda"
+  },
+  "GALVAN C.": {
+    "apellido": "GALVAN DI LEO",
+    "nombreOnly": "Candela Amiel",
+    "nombre": "Candela Amiel Galvan Di Leo",
+    "dni": "43812499",
+    "pos": "Líbero",
+    "nac": "25/03/2002",
+    "edad": 24,
+    "mano": "Derecha"
+  },
+  "GIANINETI G.": {
+    "apellido": "GIANINETTI",
+    "nombreOnly": "Giuliana",
+    "nombre": "Giuliana Gianinetti",
+    "dni": "45090476",
+    "pos": "Central",
+    "nac": "20/09/2003",
+    "edad": 22,
+    "mano": "Derecha"
+  },
+  "LADUX I.": {
+    "apellido": "LADUX",
+    "nombreOnly": "Isabella",
+    "nombre": "Isabella Ladux",
+    "dni": "45050249",
+    "pos": "Punta",
+    "nac": "24/09/2003",
+    "edad": 22,
+    "mano": "Derecha"
+  },
+  "LUJAN M.": {
+    "apellido": "LUJAN",
+    "nombreOnly": "Milagros Belén",
+    "nombre": "Milagros Belen Lujan",
+    "dni": "46509305",
+    "pos": "Armadora",
+    "nac": "05/06/2005",
+    "edad": 21,
+    "mano": "Derecha"
+  },
+  "MIGUEL S.": {
+    "apellido": "MIGUEL",
+    "nombreOnly": "Sofía",
+    "nombre": "Sofia Miguel",
+    "dni": "44475970",
+    "pos": "Punta",
+    "nac": "07/12/2002",
+    "edad": 23,
+    "mano": "Derecha"
+  },
+  "NIEVA S.": {
+    "apellido": "NIEVA",
+    "nombreOnly": "Sol Milena",
+    "nombre": "Sol Milena Nieva",
+    "dni": "46886133",
+    "pos": "Punta / Opuesta",
+    "nac": "24/05/2007",
+    "edad": 19,
+    "mano": "Derecha"
+  },
+  "ORTIZ M.": {
+    "apellido": "ORTIZ",
+    "nombreOnly": "Morella",
+    "nombre": "Morella Ortiz",
+    "dni": "50000537",
+    "pos": "Opuesta",
+    "nac": "05/02/2010",
+    "edad": 16,
+    "mano": "Derecha"
+  },
+  "OYOLA M.": {
+    "apellido": "OYOLA",
+    "nombreOnly": "Morena",
+    "nombre": "Morena Oyola",
+    "dni": "49617872",
+    "pos": "Central",
+    "nac": "27/05/2009",
+    "edad": 17,
+    "mano": "Derecha"
+  },
+  "PAYAN A.": {
+    "apellido": "PAYÁN",
+    "nombreOnly": "Aisha",
+    "nombre": "Aisha Payán",
+    "dni": "95219884",
+    "pos": "Punta",
+    "nac": "22/02/2006",
+    "edad": 20,
+    "mano": "Derecha"
+  },
+  "PLANO L.": {
+    "apellido": "PLANO",
+    "nombreOnly": "Liz",
+    "nombre": "Liz Plano",
+    "dni": "45698424",
+    "pos": "Central",
+    "nac": "22/04/2004",
+    "edad": 22,
+    "mano": "Derecha"
+  },
+  "RAJANI A.": {
+    "apellido": "RAJANI",
+    "nombreOnly": "Ambar Magali",
+    "nombre": "Ambar Magali Rajani",
+    "dni": "49404596",
+    "pos": "Central",
+    "nac": "05/03/2009",
+    "edad": 17,
+    "mano": "Derecha"
+  },
+  "VALDEMARIN A.": {
+    "apellido": "VALDEMARIN",
+    "nombreOnly": "Abril Ludmila",
+    "nombre": "Abril Ludmila Valdemarin",
+    "dni": "46509617",
+    "pos": "Punta",
+    "nac": "11/10/2005",
+    "edad": 20,
+    "mano": "Derecha"
+  },
+  "VARGAS P.": {
+    "apellido": "VARGAS",
+    "nombreOnly": "Paola Gabriela",
+    "nombre": "Paola Gabriela Vargas",
+    "dni": "33567235",
+    "pos": "Armadora",
+    "nac": "19/11/1988",
+    "edad": 37,
+    "mano": "Derecha"
+  },
+  "ZAMAR L.": {
+    "apellido": "ZAMAR PAIS",
+    "nombreOnly": "Lucía",
+    "nombre": "Lucía Zamar Pais",
+    "dni": "41886733",
+    "pos": "Líbero",
+    "nac": "05/04/1999",
+    "edad": 27,
+    "mano": "Derecha"
+  },
+  "ZURBRIGGEN A.": {
+    "apellido": "ZURBRIGGEN",
+    "nombreOnly": "Agostina",
+    "nombre": "Agostina Zurbriggen",
+    "dni": "38278944",
+    "pos": "Opuesta",
+    "nac": "03/01/1995",
+    "edad": 31,
+    "mano": "Derecha"
+  }
+}
