@@ -30,7 +30,7 @@ export function Dashboard() {
     <div className="appShell">
       <AppHeader />
       <TabBar tab={tab} onTab={setTab} role={userProfile?.rol} />
-      {tab === 1 ? <PlayerSheet playerId={userProfile?.playerId} /> : null}
+      {tab === 1 ? <PlayerSheet playerId={userProfile?.playerId} role={userProfile?.rol} /> : null}
       {tab === 2 && userProfile?.rol === 'profesor' ? <TeamStats /> : null}
       {tab === 3 && userProfile?.rol === 'profesor' ? <MatchRegistry /> : null}
       {tab === 4 && userProfile?.rol === 'profesor' ? <AdminPanel /> : null}

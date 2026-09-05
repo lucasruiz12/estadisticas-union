@@ -19,7 +19,7 @@ import { cleanAIData } from '../ai/cleanAIData'
 import { analyzeWithAI } from '../ai/analyzeWithAI'
 import { renderFormattedAIReport } from '../utils/formatAIReport'
 
-export function PlayerSheet({ playerId }) {
+export function PlayerSheet({ playerId, role }) {
   const { profiles, records } = useStats()
   const sortedKeys = useMemo(
     () => getSortedPlayerKeys(profiles),
@@ -98,7 +98,7 @@ export function PlayerSheet({ playerId }) {
     try {
       // 1. Si el usuario activó la IA, obtenemos el informe primero
       let analysisText = null;
-      if (useAIToReport) {
+      if (useAIToReport && role === 'profesor') {
         setDownloadInProgress(true);
         const data = {
           player: p,
@@ -204,6 +204,7 @@ export function PlayerSheet({ playerId }) {
           <button type="button" className="btnExport" onClick={exportPng} disabled={downloadInProgress}>
             {downloadInProgress ? 'Exportando...' : 'EXPORTAR PNG'}
           </button>
+          {role === "profesor" && 
           <label className="adminCheckbox">
             <input
               type="checkbox"
@@ -211,7 +212,7 @@ export function PlayerSheet({ playerId }) {
               onChange={(event) => setUseAIToReport(event.target.checked)}
             />
             CON AI
-          </label>
+          </label>}
         </div>
 
         <div className="cardPerfil">
