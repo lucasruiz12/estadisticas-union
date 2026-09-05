@@ -15,6 +15,9 @@ import { FilterSelect } from '../ui/FilterSelect'
 import { FundCard } from '../ui/FundCard'
 import { KpiCard } from '../ui/KpiCard'
 import { PlayerCompareModal } from '../comparador/PlayerCompareModal'
+import { cleanAIData } from '../ai/cleanAIData'
+import { analyzeWithAI } from '../ai/analyzeWithAI'
+import { renderFormattedAIReport } from '../utils/formatAIReport'
 
 export function PlayerSheet({ playerId }) {
   const { profiles, records } = useStats()
@@ -28,6 +31,9 @@ export function PlayerSheet({ playerId }) {
   const [rival, setRival] = useState('')
   const [fund, setFund] = useState('')
   const [compareOpen, setCompareOpen] = useState(false)
+  const [useAIToReport, setUseAIToReport] = useState(false)
+  const [downloadInProgress, setDownloadInProgress] = useState(false);
+  const [aiReportContent, setAiReportContent] = useState(null);
   const sheetRef = useRef(null)
 
   const p = profiles[playerKey]
@@ -88,20 +94,59 @@ export function PlayerSheet({ playerId }) {
     setRival('')
   }
 
-  const exportPng = () => {
-    const element = sheetRef.current
-    if (!element || !p) return
-    html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#070e1e',
-    }).then((canvas) => {
-      const link = document.createElement('a')
-      link.download = `Ficha_Tecnica_${p.nombre.replace(/\s+/g, '_')}.png`
-      link.href = canvas.toDataURL('image/png')
-      link.click()
-    })
-  }
+  const exportPng = async () => {
+    try {
+      // 1. Si el usuario activó la IA, obtenemos el informe primero
+      let analysisText = null;
+      if (useAIToReport) {
+        setDownloadInProgress(true);
+        const data = {
+          player: p,
+          playerId: playerKey,
+          filters: { torneo, fase, rival, fund },
+          records: playerRecs,
+        };
+        const cleanedData = cleanAIData(data);
+
+        // Llamamos a la Netlify Function y esperamos el resultado
+        const result = await analyzeWithAI(cleanedData);
+        if (result && result.ok) {
+          analysisText = result.analysis;
+        }
+      }
+
+      // 2. Inyectas el texto temporalmente en el estado o componente que renderiza la hoja
+      // (ej: setAiReportContent(analysisText)) y das un pequeño respiro para que React renderice el DOM
+      if (analysisText) {
+        setAiReportContent(analysisText);
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
+
+      // 3. Ejecutas html2canvas de tu contenedor del reporte ya completo con la IA incluida
+      const element = sheetRef.current; // tu contenedor principal
+      if (!element) {
+        return;
+      }
+      const canvas = await html2canvas(element);
+
+      // 4. Transformas a imagen y disparas la descarga automática
+      const image = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.href = image;
+      link.download = `reporte-${p?.nombre || 'jugador'}.png`;
+      link.click();
+
+      // 5. Limpias el contenido temporal de la IA de la vista
+      setAiReportContent(null);
+
+    } catch (error) {
+      console.error('Error al exportar con IA:', error);
+      alert('Hubo un error al generar el reporte con IA.');
+      setAiReportContent(null);
+    } finally {
+      setDownloadInProgress(false);
+    }
+  };
 
   if (!p) return <p className="muted">Sin jugadores cargados.</p>
 
@@ -156,9 +201,17 @@ export function PlayerSheet({ playerId }) {
           <div className="jugTitle" style={{ margin: 0, flex: 1 }}>
             {p.apellido.toUpperCase()}, {p.nombreOnly.toUpperCase()}
           </div>
-          <button type="button" className="btnExport" onClick={exportPng}>
-            EXPORTAR PNG
+          <button type="button" className="btnExport" onClick={exportPng} disabled={downloadInProgress}>
+            {downloadInProgress ? 'Exportando...' : 'EXPORTAR PNG'}
           </button>
+          <label className="adminCheckbox">
+            <input
+              type="checkbox"
+              checked={useAIToReport}
+              onChange={(event) => setUseAIToReport(event.target.checked)}
+            />
+            CON AI
+          </label>
         </div>
 
         <div className="cardPerfil">
@@ -380,6 +433,18 @@ export function PlayerSheet({ playerId }) {
               ))
             )}
           </div>
+
+          {aiReportContent && (
+            <div className="ai-report-section" style={{ marginTop: '20px', padding: '15px', background: 'var(--card2)', border: '1px solid var(--border-light)', borderRadius: 8 }}>
+
+              {/* Aquí va el contenido limpio que devuelve el helper */}
+              {renderFormattedAIReport(aiReportContent)}
+              <div style={{ color: 'var(--text-dim)', fontSize: '11px', marginBottom: '12px', fontStyle: 'italic' }}>
+                Fecha de análisis: {new Date().toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </div>
+
+            </div>
+          )}
         </div>
       </div>
 

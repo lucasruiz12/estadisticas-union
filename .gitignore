@@ -26,3 +26,5 @@ firebase-import/
 *.njsproj
 *.sln
 *.sw?
+
+.netlify/
